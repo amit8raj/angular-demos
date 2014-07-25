@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Different</title>
+    <script type="application/javascript" src="angular.min.js"></script>
+    <script typpe="text/javascript" src="itemAddSubDemo.js"></script>
+    <link rel="stylesheet" href="itemAddSubDemo.css">
+</head>
+
+<body>
+<form ng-app ng-controller="OrderFormController">
+
+    <h1>Services</h1>
+
+    <ul>
+        <li ng-repeat="service in services" ng-click="toggleActive(service)" ng-class="{active:service.active}">
+            {{service.name}} <span>{{service.price | currency}}</span>
+        </li>
+    </ul>
+    <div class="total">
+        Total: <span>{{total() | currency}}</span>
+    </div>
+
+</form>
+</body>
+</html>

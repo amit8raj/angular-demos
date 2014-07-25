@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--Created by Amit Raj-->
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>To do Test</title>
+    <style>
+        input {
+            border: 2px solid #456879;
+            border-radius: 10px;
+            height: 22px;
+            width: 230px;
+        }
+    </style>
+    <script type="application/javascript" src="bootstrap.js"></script>
+    <script type="application/javascript" src="angular.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.css">
+    <script>
+        function myController($scope) {
+
+            $scope.tasks = [];
+            $scope.completeTask = [];
+            $scope.addTask = function () {
+                if ($scope.newTask != undefined)//&& ($scope.newDescribe != undefined))
+                {
+                    var currentDate = new Date();
+                    var date1 = currentDate.getDate() + "/" + currentDate.getMonth() + "/" + currentDate.getFullYear();
+                    var time1 = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+                    //if (confirm('You have a new task ' + $scope.newTask)) {
+                        $scope.tasks.push({
+                            name: $scope.newTask,
+                            description: $scope.description,
+                            status: 'Pending',
+                            date: date1,
+                            time: time1
+                        }
+                            );
+                    $scope.newTask = "";
+                    $scope.description = "";
+                    var table= document.getElementById('table');
+                    table.removeAttribute('hidden');
+
+                }
+                else if ($scope.newTask.name.length>0)
+                {
+                    alert('You have not entered any task. Please enter one');
+                }
+                else if ($scope.newTask.description.length>0)
+                {
+                    alert('You have not entered any description about the task. Please enter one');
+                }
+                else {
+                    alert('You have not entered any task and its description. Please enter one');
+                }
+            }
+            $scope.deleteTask = function () {
+                var table = document.getElementById("table");
+
+                var newList = [];
+                var rowIndex;
+                if (!document.getElementsByTagName || !document.createTextNode) return;
+                var rows = document.getElementById('table').getElementsByTagName('tr');
+                for (i = 0; i < rows.length; i++) {
+                    rows[i].onclick = function () {
+                        rowIndex = this.rowIndex - 1;
+                        for (var j = 0; j < $scope.tasks.length; j++) {
+                            if (rowIndex != j) {
+                                newList.push($scope.tasks[j]);
+                            }
+                        }
+                        if (confirm("Delete selected task from to do list")) {
+                            $scope.completeTask.push($scope.tasks[rowIndex]);
+
+                            $scope.tasks = [];
+                            $scope.tasks = newList;
+                           $scope.completeTask[$scope.completeTask.length - 1].status = 'Done';
+                            $scope.$apply();
+
+
+                        }
+
+                        if($scope.tasks.length==0)
+                            table.setAttribute('hidden','hidden');
+
+                        var tableNew = document.getElementById("tableNew");
+                        console.log('new table len' + $scope.completeTask.length);
+                        if($scope.completeTask.length==0)
+                        {
+                            tableNew.setAttribute('hidden','hidden');
+                        }
+                        else
+                        {
+                            tableNew.removeAttribute('hidden');
+                        }
+                    }
+                }
+
+            }
+        }
+    </script>
+</head>
+<body>
+<!--img src="images.jpeg" style="height:500px; z-index:-1; width:400px;"-->
+<div ng-app>
+    <div ng-controller='myController'>
+        <center>
+            <form id="firstForm" style="color:#ffffff; margin-left:0px;">
+                <input type="text" size="31" ng-model="newTask" placeholder="What's there to do???"
+                       style="color:blue; background-color:#FCF5D8;color:#AD8C08;border:5px double #AD8C08;">
+                <br>
+                <textarea id="textarea" style="margin-left:75px; background-color:#FCF5D8;color:#AD8C08;border:5px double #AD8C08;"
+                          rows="10" cols="30" ng-model="description"
+                          placeholder="Description about the Task."></textarea>
+                <input type="button" value="Add Task" ng-click='addTask()'/>
+            </form>
+
+            </br>
+
+            <form id="secondForm" style="color:#ffffff;margin-left:0px;">
+                <table id="table" hidden="hidden" border="3">
+                    <tr style="font-size:18px;color:orange;text-shadow:1px 1px 1px #666;">
+                        <th>Task Name</th>
+                        <th>Task Adding Date</th>
+                        <th>Task Adding Time</th>
+                        <th>Task Status</th>
+                        <th>Task Description</th>
+                        <th>Task Delete</th>
+                    </tr>
+                    <tr ng-repeat="task in tasks">
+                        <td>
+                            <center>{{task.name}}</center>
+                        </td>
+                        <td>
+                            <center>{{task.date}}</center>
+                        </td>
+                        <td>
+                            <center>{{task.time}}</center>
+                        </td>
+                        <td>
+                            <center>{{task.status}}</center>
+                        </td>
+                        <td>
+                            <center>{{task.description}}</center>
+                        </td>
+                        <td>
+                            <input type="button" style="font-size:18px;color:orange;text-shadow:1px 1px 1px #000;"
+                                   name="btn" value="Click to Delete" ng-click='deleteTask()'/>
+                        </td>
+                    </tr>
+                </table>
+                </br></br></br>
+
+                <table id="tableNew" hidden="hidden" border="3">
+                    <tr style="font-size:18px;color:orange;text-shadow:1px 1px 1px #666;">
+                        <th>Task Name</th>
+                        <th>Task Adding Date</th>
+                        <th>Task Adding Time</th>
+                        <th>Task Status</th>
+                        <th>Task Description</th>
+                    </tr>
+                    <tr ng-repeat="doneTask in completeTask">
+                        <td>
+                            <center>{{doneTask.name}}</center>
+                        </td>
+                        <td>
+                            <center>{{doneTask.date}}</center>
+                        </td>
+                        <td>
+                            <center>{{doneTask.time}}</center>
+                        </td>
+                        <td>
+                            <center>{{doneTask.status}}</center>
+                        </td>
+                        <td>
+                            <center>{{doneTask.description}}</center>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </center>
+    </div>
+</div>
+</body>
+</html>

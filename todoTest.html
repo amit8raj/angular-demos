@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To Do</title>
+    <script type="application/javascript" src="angular.min.js"></script>
+    <script typpe="text/javascript" src="todoTest.js"></script>
+    <link rel="stylesheet" href="todoTest.css">
+    <center>
+    <h1>Enter your to do below</h1>
+        </center>
+</head>
+<body>
+<div>
+    <div ng-app="myFirstApp">
+
+        <div ng-controller="someDataController">
+            <form ng-controller="myController">
+            <input ng-model="myArr" type ="text" name ="TaskName" placeholder="Task Name" size="31">
+            <br>
+            <textarea ng-model="myArr" rows="6" cols="30" placeholder="What is there to do???"></textarea>
+            <br>
+            <input type="button" value="Add your to do." size="65">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

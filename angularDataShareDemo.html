@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Data Share demo</title>
+    <script type="application/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="angularDataShareDemo.js"></script>
+</head>
+
+<body>
+<div ng-app="myApp">
+    <div ng-controller="firstControl">
+        <div ng-controller="secondControl">
+            <input ng-model="rootname.rootage">
+            <b>my age is {{rootname.rootage}}</b>
+            <input ng-model="name.roll">
+            <b>my roll is {{name.roll}}</b>
+            <input ng-model="name.salary">
+            <b>my salary is {{name.salary}}</b>
+        </div>
+    </div>
+</div>
+</body>
+</html>

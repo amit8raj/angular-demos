@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>Different</title>
+    <script type="application/javascript" src="angular.min.js"></script>
+    <script typpe="text/javascript" src="angularSearchDemo.js"></script>
+    <link rel="stylesheet" href="angularSearchDemo.css">
+</head>
+
+<body>
+<div ng-app="instantSearch" ng-controller="InstantSearchController">
+
+    <div class="bar">
+        <input type="text" ng-model="searchString" placeholder="Enter your search terms" />
+    </div>
+
+    <ul>
+        <li ng-repeat="i in items | searchFor:searchString">
+            <a href="{{i.url}}"><img ng-src="{{i.image}}" /></a>
+            <p>{{i.title}}</p>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
